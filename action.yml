@@ -1,0 +1,12 @@
+name: Deploy to Hatchbox
+
+inputs:
+  deploy_key:
+    description: The Hatchbox project's deploy key.
+    required: true
+
+runs:
+  using: docker
+  image: Dockerfile
+  args:
+    - ${{ inputs.deploy_key }}
