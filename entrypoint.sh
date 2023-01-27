@@ -1,4 +1,4 @@
-#!/bin/sh -l
+#!/bin/sh
 
 echo "https://app.hatchbox.io/webhooks/deployments/$INPUT_DEPLOY_KEY?latest=true"
 
