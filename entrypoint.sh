@@ -1,20 +1,20 @@
 #!/bin/sh
 
-echo "https://app.hatchbox.io/webhooks/deployments/$INPUT_DEPLOY_KEY?latest=true"
+echo "https://hatchbox.io/webhooks/deployments/$INPUT_DEPLOY_KEY?latest=true"
 
-activity_id=$(curl -X POST https://app.hatchbox.io/webhooks/deployments/$INPUT_DEPLOY_KEY?latest=true | jq -r '.id')
+activity_id=$(curl -X POST https://hatchbox.io/webhooks/deployments/$INPUT_DEPLOY_KEY?latest=true | jq -r '.id')
 
 if [ "$activity_id" = "null" ]; then
   echo "Deploy request failed"
   exit 1
 else
-  deploy_state=$(curl https://app.hatchbox.io/apps/$INPUT_DEPLOY_KEY/activities/$activity_id | jq -r '.state')
+  deploy_state=$(curl https://hatchbox.io/apps/$INPUT_DEPLOY_KEY/activities/$activity_id | jq -r '.state')
 
   while [ "$deploy_state" = "processing" ]
   do
     sleep 10
 
-    deploy_state=$(curl https://app.hatchbox.io/apps/$INPUT_DEPLOY_KEY/activities/$activity_id | jq -r '.state')
+    deploy_state=$(curl https://hatchbox.io/apps/$INPUT_DEPLOY_KEY/activities/$activity_id | jq -r '.state')
   done
 
   if [ "$deploy_state" = "completed" ]; then
